@@ -13,7 +13,7 @@ def get_user():
     cursor.execute("CREATE TABLE users (username TEXT)")
     cursor.execute("INSERT INTO users VALUES ('admin')")
 
-    # 🚨 Vulnerable SQL injection (REALISTIC PATTERN)
+    # Vulnerable SQL injection (REALISTIC PATTERN)
     query = "SELECT * FROM users WHERE username = '" + username + "'"
     cursor.execute(query)
 
