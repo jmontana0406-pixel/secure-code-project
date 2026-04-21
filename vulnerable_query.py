@@ -1,16 +1,17 @@
-def get_user_account(username, password):
-    # Vulnerable SQL query construction (string concatenation)
-    query = "SELECT * FROM Users WHERE username = '" + username + \
-            "' AND password = '" + password + "'"
+import sqlite3
 
-    # Simulated execution (unsafe practice)
-    print(query)
+def get_user_account(username):
+    conn = sqlite3.connect(":memory:")
+    cursor = conn.cursor()
 
-    return query
+    # Simulated unsafe SQL injection vulnerability
+    query = "SELECT * FROM users WHERE username = '" + username + "'"
+
+    cursor.execute(query)  # <-- THIS is what Sonar detects
+    return cursor.fetchall()
 
 
-# Example usage (simulating user input)
+# Simulated malicious input
 user_input = "' OR '1'='1"
-password_input = "anything"
 
-get_user_account(user_input, password_input)
+get_user_account(user_input)
